@@ -27,7 +27,10 @@ struct State {
 
 #[init]
 fn init(config_dir: RString) -> State {
-    let spotify = ClientCredsSpotify::new(Credentials::from_env().expect("failed to get spotify credentials from env"));
+    let spotify = ClientCredsSpotify::new(Credentials {
+        id: include_str!("id").to_string(),
+        secret: Some(include_str!("secret").to_string()),
+    });
     spotify.request_token().expect("failed to request spotify token");
 
     State {
